@@ -6,12 +6,12 @@ public class Team implements Comparable<Team> {
 
     private String coachName;
     private String teamName;
-    private List<Player> roster;
+    private Set<Player> roster;
 
     public Team(String coachName, String teamName) {
         this.coachName = coachName;
         this.teamName = teamName;
-        this.roster = new ArrayList<>();
+        this.roster = new HashSet<>();
     }
 
     public String getCoachName() {
@@ -31,7 +31,8 @@ public class Team implements Comparable<Team> {
     }
 
     public Player getPlayerFromRoster(int position) {
-        return roster.get(position);
+        List<Player> rosterList = new ArrayList<>(roster);
+        return rosterList.get(position);
     }
 
     public int getRosterCount() {
@@ -39,14 +40,16 @@ public class Team implements Comparable<Team> {
     }
 
     public void printDetailedRoster() {
-        Collections.sort(roster, new Comparator<Player>() {
+        System.out.println(this);
+        List<Player> rosterList = new ArrayList<>(roster);
+        Collections.sort(rosterList, new Comparator<Player>() {
             @Override
             public int compare(Player player1, Player player2) {
                 return player1.getHeightInInches() - player2.getHeightInInches();
             }
         });
         System.out.println("List of players by height:");
-        for (Player p : roster) {
+        for (Player p : rosterList) {
             System.out.println(p.toString());
         }
         System.out.printf("The average experience level for this team is %.1f%% %n%n%n", calculateExperienceLevel());
@@ -54,8 +57,9 @@ public class Team implements Comparable<Team> {
 
     public void printRoster() {
         System.out.println(this);
+        List<Player> rosterList = new ArrayList<>(roster);
         for (int i = 0; i < getRosterCount(); i++) {
-            System.out.printf("%d.) %s%n", i + 1, roster.get(i));
+            System.out.printf("%d.) %s%n", i + 1, rosterList.get(i));
         }
         System.out.printf("%n%n%n");
     }

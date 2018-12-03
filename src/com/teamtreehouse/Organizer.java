@@ -92,6 +92,12 @@ public class Organizer {
     }
 
     private Team promptCreateTeam() throws IOException {
+
+        // we can't allow user to add more teams than there are players
+        if (allTeams.size() >= allPlayers.length) {
+            throw new IllegalArgumentException("You can't create more teams than there are players available!");
+        }
+
         System.out.printf("%n%n%n");
         System.out.print("What is the team name: ");
         String teamName = reader.readLine();
@@ -184,7 +190,6 @@ public class Organizer {
 
     private void promptReport() throws IOException {
         System.out.printf("%n%n%n");
-
         if (areTeamsAvailable()) {
             for (Team t : allTeams) {
                 t.printDetailedRoster();
